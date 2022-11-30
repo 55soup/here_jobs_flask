@@ -5,10 +5,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>검색 결과 {{keyword}}</h1>
-    <h2>{{jobs}}</h2>
+    <div class="container">
+        <h3>검색 결과 {{keyword}}</h3>
+        {% if msg %}
+            <h2>{{msg}}</h2>
+        {% else %}
+            <div class="row">
+                {% for index in index_list %}
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{index[0]}}</h5>
+                                <p class="card-text">{{index[5]}}</p>
+                                {% if index[8]|length < 200 %}
+                                <p class="card-text">{{index[8]}}</p>
+                                {% else %}
+                                <p class="card-text">{{index[8][:200]}}...</p>
+                                {% endif %}
+                                <a href="https://www.google.com/search?q={{index[6].replace("a href=", '').replace('<', '').replace('/a>', '').replace('"', '').replace("target=_blank","").replace(">","").replace("https//","")}}" class="btn btn-primary">구글 검색하러 가기</a>
+                                <p></p>
+                            </div>
+                        </div>
+                </div>
+                {% endfor %}
+          </div>
+          {% endif %}
+       
+    </div>
 </body>
 </html>

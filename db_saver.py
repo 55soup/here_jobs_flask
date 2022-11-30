@@ -23,7 +23,7 @@ def save_db():
 
 def select_all():
     #db결과 반환
-    ret = list()
+    ret = []
     try:
         db = save_db()
         c = db.cursor()
@@ -34,3 +34,21 @@ def select_all():
     finally:
         db.close()
         return ret
+
+# db keyword검색
+def search_keyword(input):
+    list2 = select_all()
+    indexs=[]
+    keyword = input
+    for column in list2:
+        # print(list(column))
+        for arr in column:
+            if keyword in arr:
+                indexs.append(list(column))
+    return indexs
+
+    # indexs.append(list(s for s in column if keyword in s))
+    # indexs.append(i for i in range(len(column)) if keyword in column[i])
+# flutten(indexs)
+# new_indexs = [v for v in indexs if v] #검색결과들만 가져와짐
+# 검색결과와 같은 인덱스의 배열들이 가져와져야...
