@@ -76,67 +76,30 @@ def parse_jobs():
     jobs_csv = []
     for a in titles:
         # 정보정제
-        title = str(a).replace("<br/>", "\n").replace("<html-blob>", "").replace("<span>", "").replace("</html-blob>",
-                                                                                                       "").replace(
-            "</span>", "")  # 태그제거
+        title = str(a).replace("<br/>", "\n").replace("<html-blob>", "").replace("<span>", "").replace("</html-blob>","").replace("</span>", "")  # 태그제거
         title2 = title.replace("파일이름: ", "").replace("(주)Nomad 개발분야 지원자 3100김맑음_이력서, 자기소개서", "\n").replace(
             "(주)Nomad 개발분야 지원자 3300김개인_포트폴리오", "").replace("* 파일이름 지켜주세요", "")
         title3 = title2.replace("<b>", "").replace("</b>", "").replace(":", "")  # 태그제거
         title4 = title3.replace("\n", "").replace("기업명(사업자등록증명)", "").replace("사업자등록번호", "").replace("업종", "").replace(
             "사원수(명)", "").replace("매출규모(억)", "").replace("주소(도로명 주소)", "").replace("웹사이트 주소", "").replace("기업소개 및 기업규모","").replace(
             "담당업무", "").replace("지원요건", "").replace("채용인원", "").replace("제출서류", "").replace("제출서류 마감일", "").replace(
-            "서류제출 마감일", "")
+            "서류제출 마감일", "").replace('<a href="', "").replace('</a>',"")
 
         # list에 넣기
         # list2 = list(filter(None, re.split(r'\d+.', title4)))
         # print(list2)
         words = '!!!'
-        for a in range(1, 10):
+        for a in range(1, 11):
             title4 = title4.replace(f'{a}. ', words).replace(u'\xa0', u' ')  # 숫자. 을 기준으로 나누기
         answer = title4.split(words)
-        print(answer)
         # key_list=["enterprise", "enterprise_num", "sector", "employee", "sales", "address", "weblink", "introduce", "work", "req_apply", "recruitment", "submit", "submit_deadline", "etc1"]
         # dictionary = dict(zip(key_list, answer[1:])) # db에 넣기 위해 dict으로 변환
         # # return dictionary
 
-        return answer[1:10]
-        # jobs_csv.append(answer[1:10])  # 17열까지로 제한 -> db에 저장하기 좋게
-        # # 정보 csv파일에 저장.
-        # save_to_file(jobs_csv)
+        jobs_csv.append(answer[1:10])  # 17열까지로 제한 -> db에 저장하기 좋게
+        # 정보 csv파일에 저장.
+        save_to_file(jobs_csv)
 
     print(driver.quit())  # 종료
 
 # parse_jobs()
-#db관련
-def save_db():
-    conn = sqlite3.connect("datebase.db")   # 저장할 DB파일 이름
-    curs = conn.cursor()
-    try:
-        curs.execute("CREATE TABLE jobs (enterprise TEXT, enterprise_num TEXT, sector TEXT, employee TEXT, sales TEXT, address TEXT, weblink TEXT, introduce TEXT, work TEXT)")  #9
-    except Exception as e:
-        print('db error:', e)
-    
-    reader = open('jobs.csv', 'rt', encoding='UTF8') # CSV파일 읽기모드로 열기
-    # reader=csv.reader(open('jobs.csv', 'r'), delimiter=',', quotechar='"')
-    for row in reader:
-        a=row.split(",")
-        # to_db = [index, (a[1]), (a[2]), (a[3]), (a[4]), (a[5]), (a[6]), (a[7]), (a[8]), (a[9]))]
-        curs.execute("INSERT INTO jobs VALUES (?,?,?,?,?,?,?,?,?)", (a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8]))
-    # conn.commit()  #커밋 (쌓아둔 명령 실행)
-    # conn.close()
-    return conn
-
-# save_db()
-
-def select_all():
-    ret = list()
-    try:
-        db = save_db()
-        c = db.cursor()
-        c.execute('SELECT * FROM jobs')
-        ret = c.fetchall()
-    except Exception as e:
-        print('db error:', e)
-    finally:
-        db.close()
-        return ret

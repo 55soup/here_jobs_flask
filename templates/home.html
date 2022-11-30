@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <div class="container">
@@ -24,7 +24,7 @@
             </div>
           <div class="container-fluid">
             <form class="d-flex" role="search" action="/search">
-              <input class="form-control me-2" type="search" placeholder="검색" aria-label="Search" name="keyword">
+              <input class="form-control me-2" type="search" placeholder="검색" aria-lab5el="Search" name="keyword">
               <button class="btn btn-outline-success" type="submit">검색</button>
             </form>
           </div>
@@ -35,8 +35,13 @@
                   <div class="card-body">
                     <h5 class="card-title">{{job[0]}}</h5>
                     <p class="card-text">{{job[1]}}</p>
-                    <p class="card-text">{{job[2]}}</p>
-                    <a href="{{job[7]}}" class="btn btn-primary">회사 소개 홈페이지</a>
+                    {% if job[8]|length < 200 %}
+                      <p class="card-text">{{job[8]}}</p>
+                    {% else %}
+                      <p class="card-text">{{job[8][:200]}}...</p>
+                    {% endif %}
+                    <a href="https://www.google.com/search?q={{job[6].replace("a href=", '').replace('<', '').replace('/a>', '').replace('"', '').replace("target=_blank","").replace(">","").replace("https//","")}}" class="btn btn-primary">구글 검색하러 가기</a>
+                    <p></p>
                   </div>
                 </div>
               </div>
