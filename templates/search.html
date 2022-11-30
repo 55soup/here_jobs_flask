@@ -11,9 +11,7 @@
 <body>
     <div class="container">
         <h3>검색 결과 {{keyword}}</h3>
-        {% if msg %}
-            <h2>{{msg}}</h2>
-        {% else %}
+        {% if index_list|length > 0 %}
             <div class="row">
                 {% for index in index_list %}
                     <div class="col-sm-6">
@@ -30,11 +28,13 @@
                                 <p></p>
                             </div>
                         </div>
-                </div>
-                {% endfor %}
-          </div>
-          {% endif %}
-       
+                    </div>
+                {% endfor %}           
+            </div>
+        {% else %}
+            <br />
+            <p>검색결과 없음.</p>
+        {% endif %}
     </div>
 </body>
 </html>

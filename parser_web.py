@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
 from csv_save import save_to_file
+from db_saver import *
 import csv, sqlite3
 
 def parse_jobs():
@@ -15,7 +16,6 @@ def parse_jobs():
 
     # 크롭 웹 드라이버의 경로를 설정
     driver = webdriver.Chrome(r"C:\Users\sunjo\OneDrive\바탕 화면\flask-project\chromedriver.exe")
-    driver.set_window_position(-10000,0) # chrome 창 안보이게
     # options.add_experimental_option('excludeSwitches', ['enable-logging'])
     # driver = webdriver.Chrome(options=options)
     # driver.set_window_position(-10000, 0)  # chrome 창 안보이게
@@ -23,7 +23,7 @@ def parse_jobs():
 
     # 구글 로그인에 접속
     driver.get(url)
-    # driver.maximize_window()
+    # driver.maximize_window() #최대창 크기로
     # id입력
     driver.find_element(By.ID, "identifierId").send_keys("w2118@e-mirim.hs.kr")
     sleep(3)
@@ -96,10 +96,11 @@ def parse_jobs():
         # dictionary = dict(zip(key_list, answer[1:])) # db에 넣기 위해 dict으로 변환
         # # return dictionary
 
-        jobs_csv.append(answer[1:10])  # 17열까지로 제한 -> db에 저장하기 좋게
+        jobs_csv.append(answer[1:10])  # 10열까지로 제한 -> db에 저장하기 좋게
         # 정보 csv파일에 저장.
         save_to_file(jobs_csv)
 
     print(driver.quit())  # 종료
 
-# parse_jobs()
+# parse_jobs() # 웹스크래핑 후 csv에 저장
+# save_db() # db에 저장

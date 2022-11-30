@@ -1,7 +1,7 @@
 body{
     padding: 5rem;
 }
-h3{
+h3, p{
     padding-left: 3vh;
 }
 .card{
