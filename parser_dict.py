@@ -107,20 +107,36 @@ def parse_jobs():
     print(driver.quit())  # 종료
 
 # parse_jobs()
-
+#db관련
 def save_db():
-    conn = sqlite3.connect("db_6.sqlite")   # 저장할 DB파일 이름
+    conn = sqlite3.connect("datebase.db")   # 저장할 DB파일 이름
     curs = conn.cursor()
-    conn.execute("CREATE TABLE jobs (enterprise TEXT, enterprise_num TEXT, sector TEXT, employee TEXT, sales TEXT, address TEXT, weblink TEXT, introduce TEXT, work TEXT)")  #9
-
+    try:
+        curs.execute("CREATE TABLE jobs (enterprise TEXT, enterprise_num TEXT, sector TEXT, employee TEXT, sales TEXT, address TEXT, weblink TEXT, introduce TEXT, work TEXT)")  #9
+    except Exception as e:
+        print('db error:', e)
+    
     reader = open('jobs.csv', 'rt', encoding='UTF8') # CSV파일 읽기모드로 열기
     # reader=csv.reader(open('jobs.csv', 'r'), delimiter=',', quotechar='"')
     for row in reader:
-        print(row)
         a=row.split(",")
         # to_db = [index, (a[1]), (a[2]), (a[3]), (a[4]), (a[5]), (a[6]), (a[7]), (a[8]), (a[9]))]
         curs.execute("INSERT INTO jobs VALUES (?,?,?,?,?,?,?,?,?)", (a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8]))
-    conn.commit()  #커밋 (쌓아둔 명령 실행)
-    conn.close()
+    # conn.commit()  #커밋 (쌓아둔 명령 실행)
+    # conn.close()
+    return conn
 
-save_db()
+# save_db()
+
+def select_all():
+    ret = list()
+    try:
+        db = save_db()
+        c = db.cursor()
+        c.execute('SELECT * FROM jobs')
+        ret = c.fetchall()
+    except Exception as e:
+        print('db error:', e)
+    finally:
+        db.close()
+        return ret
