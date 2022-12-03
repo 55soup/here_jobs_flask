@@ -10,6 +10,7 @@
   <img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=for-the-badge&logo=Visual Studio Code&logoColor=white">
   <img src="https://img.shields.io/badge/PyCharm-000000?style=for-the-badge&logo=PyCharm&logoColor=white">
 </div>
+
 ### 미림마이스터고 구글클래스에 올라오는 채용공고를 사용자에 맞게 볼 수 있는 서비스
 
 ### [✨ 기획서 보러가기](https://www.canva.com/design/DAFTJIIJDIs/z6W1rI7ajgRTE_xomfGzNQ/view?utm_content=DAFTJIIJDIs&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
@@ -19,6 +20,8 @@
 |---|---|
 |![image](https://user-images.githubusercontent.com/86298664/205450956-67cfcc9f-a0a2-4002-afad-a2f9196188d0.png)|![image](https://user-images.githubusercontent.com/86298664/205450974-65c6e71b-ddac-4c39-85d9-0d694e149821.png)|
 
+- 미림마이스터고로 들어오는 모든 채용공고 확인가능!
+- 회사이름, 주소, 업무를 검색할 수 있음!
 
 ### 일정
 |기간|수행업무|설명|
