@@ -102,5 +102,6 @@ def parse_jobs():
 
     print(driver.quit())  # 종료
 
-# parse_jobs() # 웹스크래핑 후 csv에 저장
-# save_db() # db에 저장
+if __name__=="__main__":
+    parse_jobs() # 웹스크래핑 후 csv에 저장
+    save_db() # db에 저장
